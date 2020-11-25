@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="EDataModelStoreContainer" CdmEntityContainer="EDataEntities">
+    <EntitySetMapping Name="Talep">
+      <EntityTypeMapping TypeName="EDataModel.Talep">
+        <MappingFragment StoreEntitySet="Talep">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="talep1" ColumnName="talep" />
+          <ScalarProperty Name="kisiID" ColumnName="kisiID" />
+          <ScalarProperty Name="talepbaslik" ColumnName="talepbaslik" />
+          <ScalarProperty Name="taleptarihi" ColumnName="taleptarihi" />
+          <ScalarProperty Name="talepstatus" ColumnName="talepstatus" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblGorevYeri">
+      <EntityTypeMapping TypeName="EDataModel.tblGorevYeri">
+        <MappingFragment StoreEntitySet="tblGorevYeri">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="gorevyeri" ColumnName="gorevyeri" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblKisi">
+      <EntityTypeMapping TypeName="EDataModel.tblKisi">
+        <MappingFragment StoreEntitySet="tblKisi">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="adsoyad" ColumnName="adsoyad" />
+          <ScalarProperty Name="tcno" ColumnName="tcno" />
+          <ScalarProperty Name="kurumsicilno" ColumnName="kurumsicilno" />
+          <ScalarProperty Name="gorevyeri" ColumnName="gorevyeri" />
+          <ScalarProperty Name="talepID" ColumnName="talepID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

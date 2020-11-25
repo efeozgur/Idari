@@ -1,0 +1,218 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="EDataModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Talep">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="talep" Type="varchar" MaxLength="500" />
+          <Property Name="kisiID" Type="int" />
+          <Property Name="talepbaslik" Type="nvarchar" MaxLength="200" />
+          <Property Name="taleptarihi" Type="nvarchar" MaxLength="50" />
+          <Property Name="talepstatus" Type="bit" />
+        </EntityType>
+        <EntityType Name="tblGorevYeri">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="gorevyeri" Type="nvarchar" MaxLength="70" />
+        </EntityType>
+        <EntityType Name="tblKisi">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="adsoyad" Type="nvarchar" MaxLength="100" />
+          <Property Name="tcno" Type="nvarchar" MaxLength="11" />
+          <Property Name="kurumsicilno" Type="nvarchar" MaxLength="8" />
+          <Property Name="gorevyeri" Type="int" />
+          <Property Name="talepID" Type="int" />
+        </EntityType>
+        <Association Name="FK_Talep_tblKisi">
+          <End Role="tblKisi" Type="Self.tblKisi" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Talep" Type="Self.Talep" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblKisi">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Talep">
+              <PropertyRef Name="kisiID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblKisi_tblGorevYeri">
+          <End Role="tblGorevYeri" Type="Self.tblGorevYeri" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="tblKisi" Type="Self.tblKisi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblGorevYeri">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tblKisi">
+              <PropertyRef Name="gorevyeri" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EDataModelStoreContainer">
+          <EntitySet Name="Talep" EntityType="Self.Talep" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblGorevYeri" EntityType="Self.tblGorevYeri" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblKisi" EntityType="Self.tblKisi" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Talep_tblKisi" Association="Self.FK_Talep_tblKisi">
+            <End Role="tblKisi" EntitySet="tblKisi" />
+            <End Role="Talep" EntitySet="Talep" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblKisi_tblGorevYeri" Association="Self.FK_tblKisi_tblGorevYeri">
+            <End Role="tblGorevYeri" EntitySet="tblGorevYeri" />
+            <End Role="tblKisi" EntitySet="tblKisi" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="EDataModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Talep">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="talep1" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="kisiID" Type="Int32" />
+          <Property Name="talepbaslik" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="taleptarihi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="talepstatus" Type="Boolean" />
+          <NavigationProperty Name="tblKisi" Relationship="Self.FK_Talep_tblKisi" FromRole="Talep" ToRole="tblKisi" />
+        </EntityType>
+        <EntityType Name="tblGorevYeri">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="gorevyeri" Type="String" MaxLength="70" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblKisi" Relationship="Self.FK_tblKisi_tblGorevYeri" FromRole="tblGorevYeri" ToRole="tblKisi" />
+        </EntityType>
+        <EntityType Name="tblKisi">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="adsoyad" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="tcno" Type="String" MaxLength="11" FixedLength="false" Unicode="true" />
+          <Property Name="kurumsicilno" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
+          <Property Name="gorevyeri" Type="Int32" />
+          <Property Name="talepID" Type="Int32" />
+          <NavigationProperty Name="Talep" Relationship="Self.FK_Talep_tblKisi" FromRole="tblKisi" ToRole="Talep" />
+          <NavigationProperty Name="tblGorevYeri" Relationship="Self.FK_tblKisi_tblGorevYeri" FromRole="tblKisi" ToRole="tblGorevYeri" />
+        </EntityType>
+        <Association Name="FK_Talep_tblKisi">
+          <End Role="tblKisi" Type="Self.tblKisi" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Talep" Type="Self.Talep" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblKisi">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Talep">
+              <PropertyRef Name="kisiID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblKisi_tblGorevYeri">
+          <End Role="tblGorevYeri" Type="Self.tblGorevYeri" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="tblKisi" Type="Self.tblKisi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblGorevYeri">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tblKisi">
+              <PropertyRef Name="gorevyeri" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EDataEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Talep" EntityType="Self.Talep" />
+          <EntitySet Name="tblGorevYeri" EntityType="Self.tblGorevYeri" />
+          <EntitySet Name="tblKisi" EntityType="Self.tblKisi" />
+          <AssociationSet Name="FK_Talep_tblKisi" Association="Self.FK_Talep_tblKisi">
+            <End Role="tblKisi" EntitySet="tblKisi" />
+            <End Role="Talep" EntitySet="Talep" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblKisi_tblGorevYeri" Association="Self.FK_tblKisi_tblGorevYeri">
+            <End Role="tblGorevYeri" EntitySet="tblGorevYeri" />
+            <End Role="tblKisi" EntitySet="tblKisi" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="EDataModelStoreContainer" CdmEntityContainer="EDataEntities">
+          <EntitySetMapping Name="Talep">
+            <EntityTypeMapping TypeName="EDataModel.Talep">
+              <MappingFragment StoreEntitySet="Talep">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="talep1" ColumnName="talep" />
+                <ScalarProperty Name="kisiID" ColumnName="kisiID" />
+                <ScalarProperty Name="talepbaslik" ColumnName="talepbaslik" />
+                <ScalarProperty Name="taleptarihi" ColumnName="taleptarihi" />
+                <ScalarProperty Name="talepstatus" ColumnName="talepstatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblGorevYeri">
+            <EntityTypeMapping TypeName="EDataModel.tblGorevYeri">
+              <MappingFragment StoreEntitySet="tblGorevYeri">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="gorevyeri" ColumnName="gorevyeri" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblKisi">
+            <EntityTypeMapping TypeName="EDataModel.tblKisi">
+              <MappingFragment StoreEntitySet="tblKisi">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="adsoyad" ColumnName="adsoyad" />
+                <ScalarProperty Name="tcno" ColumnName="tcno" />
+                <ScalarProperty Name="kurumsicilno" ColumnName="kurumsicilno" />
+                <ScalarProperty Name="gorevyeri" ColumnName="gorevyeri" />
+                <ScalarProperty Name="talepID" ColumnName="talepID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

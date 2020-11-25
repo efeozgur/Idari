@@ -1,0 +1,80 @@
+﻿@model WebApplication1.Models.tblKisi
+@{
+    ViewBag.Title = "Add";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h3 style="text-align:center">Add Person Page</h3>
+<div class="container">
+    <div class="row">
+
+        <div class="col-md-4">
+            <h3>
+                Son Eklenen Personel
+            </h3>
+
+            <ul class="list-group">
+                <li class="list-group-item">Dolor sit.</li>
+                <li class="list-group-item">Amet, consectetur.</li>
+                <li class="list-group-item">Adipiscing elit.</li>
+                <li class="list-group-item">Fusce vel.</li>
+                <li class="list-group-item">Sapien elit.</li>
+            </ul>
+
+
+        </div>
+        <div class="col-md-4">
+            <div class="body" style="padding:10px; border-color:darkgrey; border-width:0.21px; border-style:solid; border-radius:6px">
+
+                @using (Html.BeginForm("Add", "Personel", FormMethod.Post))
+            {
+                    @Html.LabelFor(m => m.adsoyad)
+                    <div class="form-group">
+                        @Html.TextBoxFor(m => m.adsoyad, new { @class = "form-control" })
+                    </div>
+
+                    @Html.LabelFor(m => m.tcno)
+                    <div class="form-group">
+                        @Html.TextBoxFor(m => m.tcno, new { @class = "form-control" })
+                    </div>
+
+                    @Html.LabelFor(m => m.kurumsicilno)
+                    <div class="form-group">
+                        @Html.TextBoxFor(m => m.kurumsicilno, new { @class = "form-control" })
+                    </div>
+
+                    @Html.LabelFor(m => m.tblGorevYeri.gorevyeri)
+                    <div class="form-group">
+                        @Html.TextBoxFor(m => m.tblGorevYeri.gorevyeri, new { @class = "form-control" })
+                    </div>
+
+
+
+                    <button type="submit" class="btn btn-raised btn-success btn-round waves-effect">Yeni Kişiyi Ekle</button>
+
+
+
+            }
+
+
+            </div>
+        </div>
+        <div class="col-md-4">
+            <h5>Personel Eklerken Şunlara Dikkat!</h5>
+            <p>Fusce vel sapien elit in malesuada semper mi.</p>
+            <p>Id sollicitudin urna fermentum ut fusce varius nisl.</p>
+            <p>Ac ipsum gravida vel pretium tellus tincidunt integer.</p>
+            <p>Eu augue augue nunc elit dolor, luctus placerat.</p>
+
+        </div>
+
+
+    </div>
+
+    <hr />
+
+
+ 
+
+</div>

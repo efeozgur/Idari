@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="EDataModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Talep">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="talep" Type="varchar" MaxLength="500" />
+    <Property Name="kisiID" Type="int" />
+    <Property Name="talepbaslik" Type="nvarchar" MaxLength="200" />
+    <Property Name="taleptarihi" Type="nvarchar" MaxLength="50" />
+    <Property Name="talepstatus" Type="bit" />
+  </EntityType>
+  <EntityType Name="tblGorevYeri">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="gorevyeri" Type="nvarchar" MaxLength="70" />
+  </EntityType>
+  <EntityType Name="tblKisi">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="adsoyad" Type="nvarchar" MaxLength="100" />
+    <Property Name="tcno" Type="nvarchar" MaxLength="11" />
+    <Property Name="kurumsicilno" Type="nvarchar" MaxLength="8" />
+    <Property Name="gorevyeri" Type="int" />
+    <Property Name="talepID" Type="int" />
+  </EntityType>
+  <Association Name="FK_Talep_tblKisi">
+    <End Role="tblKisi" Type="Self.tblKisi" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Talep" Type="Self.Talep" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblKisi">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Talep">
+        <PropertyRef Name="kisiID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblKisi_tblGorevYeri">
+    <End Role="tblGorevYeri" Type="Self.tblGorevYeri" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="tblKisi" Type="Self.tblKisi" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblGorevYeri">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tblKisi">
+        <PropertyRef Name="gorevyeri" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="EDataModelStoreContainer">
+    <EntitySet Name="Talep" EntityType="Self.Talep" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblGorevYeri" EntityType="Self.tblGorevYeri" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblKisi" EntityType="Self.tblKisi" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Talep_tblKisi" Association="Self.FK_Talep_tblKisi">
+      <End Role="tblKisi" EntitySet="tblKisi" />
+      <End Role="Talep" EntitySet="Talep" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblKisi_tblGorevYeri" Association="Self.FK_tblKisi_tblGorevYeri">
+      <End Role="tblGorevYeri" EntitySet="tblGorevYeri" />
+      <End Role="tblKisi" EntitySet="tblKisi" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

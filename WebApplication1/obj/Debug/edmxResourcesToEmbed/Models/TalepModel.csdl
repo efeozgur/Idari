@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="EDataModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Talep">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="talep1" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="kisiID" Type="Int32" />
+    <Property Name="talepbaslik" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="taleptarihi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="talepstatus" Type="Boolean" />
+    <NavigationProperty Name="tblKisi" Relationship="Self.FK_Talep_tblKisi" FromRole="Talep" ToRole="tblKisi" />
+  </EntityType>
+  <EntityType Name="tblGorevYeri">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="gorevyeri" Type="String" MaxLength="70" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="tblKisi" Relationship="Self.FK_tblKisi_tblGorevYeri" FromRole="tblGorevYeri" ToRole="tblKisi" />
+  </EntityType>
+  <EntityType Name="tblKisi">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="adsoyad" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="tcno" Type="String" MaxLength="11" FixedLength="false" Unicode="true" />
+    <Property Name="kurumsicilno" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
+    <Property Name="gorevyeri" Type="Int32" />
+    <Property Name="talepID" Type="Int32" />
+    <NavigationProperty Name="Talep" Relationship="Self.FK_Talep_tblKisi" FromRole="tblKisi" ToRole="Talep" />
+    <NavigationProperty Name="tblGorevYeri" Relationship="Self.FK_tblKisi_tblGorevYeri" FromRole="tblKisi" ToRole="tblGorevYeri" />
+  </EntityType>
+  <Association Name="FK_Talep_tblKisi">
+    <End Role="tblKisi" Type="Self.tblKisi" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Talep" Type="Self.Talep" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblKisi">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Talep">
+        <PropertyRef Name="kisiID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblKisi_tblGorevYeri">
+    <End Role="tblGorevYeri" Type="Self.tblGorevYeri" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="tblKisi" Type="Self.tblKisi" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblGorevYeri">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="tblKisi">
+        <PropertyRef Name="gorevyeri" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="EDataEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Talep" EntityType="Self.Talep" />
+    <EntitySet Name="tblGorevYeri" EntityType="Self.tblGorevYeri" />
+    <EntitySet Name="tblKisi" EntityType="Self.tblKisi" />
+    <AssociationSet Name="FK_Talep_tblKisi" Association="Self.FK_Talep_tblKisi">
+      <End Role="tblKisi" EntitySet="tblKisi" />
+      <End Role="Talep" EntitySet="Talep" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblKisi_tblGorevYeri" Association="Self.FK_tblKisi_tblGorevYeri">
+      <End Role="tblGorevYeri" EntitySet="tblGorevYeri" />
+      <End Role="tblKisi" EntitySet="tblKisi" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
